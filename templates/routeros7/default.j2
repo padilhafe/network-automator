@@ -1,0 +1,12 @@
+{#
+  description: Basic interface configuration for RouterOS 7.x devices
+  safe: true
+  changes_hostname: false
+#}
+{% for iface in interfaces %}
+/interface ethernet
+set {{ iface.name }} disabled=no
+
+/ip address
+add address={{ iface.ip }}/{{ iface.mask }} interface={{ iface.name }}
+{% endfor %}

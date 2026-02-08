@@ -1,0 +1,30 @@
+{#
+  description: Complete configuration including hostname for Huawei VRP 5.x devices
+  safe: false
+  changes_hostname: true
+#}
+sysname {{ hostname }}
+
+{% for iface in interfaces %}
+interface {{ iface.name }}
+ ip address {{ iface.ip }} {{ iface.mask }}
+ undo shutdown
+ description Configured by NetDevOps Framework
+ quit
+{% endfor %}
+
+aaa
+ authentication-scheme default
+ authorization-scheme default
+ accounting-scheme default
+ domain default
+ domain default_admin
+quit
+
+user-interface vty 0 4
+ authentication-mode aaa
+ user privilege level 15
+ idle-timeout 30 0
+quit
+
+ntp-service unicast-server 8.8.8.8

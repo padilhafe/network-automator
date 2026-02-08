@@ -1,0 +1,11 @@
+{#
+  description: Interface-only configuration for Huawei VRP 8.x devices (minimal and safe)
+  safe: true
+  changes_hostname: false
+#}
+{% for iface in interfaces %}
+interface {{ iface.name }}
+ ip address {{ iface.ip }} {{ iface.mask }}
+ undo shutdown
+ quit
+{% endfor %}

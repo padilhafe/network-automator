@@ -1,0 +1,11 @@
+{#
+  description: Basic interface configuration for Huawei VRP 5.x devices
+  safe: true
+  changes_hostname: false
+#}
+{% for iface in interfaces %}
+interface {{ iface.name }}
+ ip address {{ iface.ip }} {{ iface.mask }}
+ undo shutdown
+ quit
+{% endfor %}

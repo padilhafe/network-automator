@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""
+Network Automator CLI Wrapper
+This script provides a convenient entry point for the Network Automator
+"""
+
+import subprocess
+import sys
+from pathlib import Path
+
+
+def main():
+    # Get the directory where this script is located
+    script_dir = Path(__file__).parent.absolute()
+    venv_dir = script_dir / ".venv"
+
+    # Try to use the installed nacli command from venv first
+    if venv_dir.exists():
+        venv_nacli = venv_dir / "bin" / "nacli"
+        if venv_nacli.exists():
+            try:
+                result = subprocess.run([str(venv_nacli)] + sys.argv[1:])
+                sys.exit(result.returncode)
+            except Exception as e:
+                print(f"Error executing nacli from venv: {e}")
+
+    # Fallback to system-wide nacli command
+    try:
+        result = subprocess.run(["nacli"] + sys.argv[1:])
+        sys.exit(result.returncode)
+    except FileNotFoundError:
+        print("Error: nacli command not found!")
+        print("Please install Network Automator with: pip install -e .")
+        sys.exit(1)
+    except KeyboardInterrupt:
+        print("\nOperation cancelled by user")
+        sys.exit(130)
+    except Exception as e:
+        print(f"Error executing Network Automator: {e}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
