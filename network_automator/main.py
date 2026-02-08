@@ -158,13 +158,24 @@ def apply_config(
 
         # Render template
         template_file = f"{template_name}.j2"
+
+        # Get config data from device, with fallback to device data for backward compatibility
+        config_data = device.get("config", {})
+
+        # If no config section exists, use legacy approach with interfaces and routes
+        if not config_data:
+            config_data = {
+                "interfaces": device.get("interfaces", []),
+                "routes": device.get("routes", []),
+            }
+
+        # Always ensure hostname is available
+        config_data["hostname"] = device["name"]
+
         config_text = render_template(
             vendor=vendor,
             template_name=template_file,
-            dados={
-                "hostname": device["name"],
-                "interfaces": device.get("interfaces", []),
-            },
+            dados=config_data,
         )
 
         config_set = [line.strip() for line in config_text.splitlines() if line.strip()]

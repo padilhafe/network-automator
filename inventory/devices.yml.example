@@ -7,13 +7,14 @@ devices:
     password: Password@123
     log_path: logs/
     session_log: netmiko_huawei-ne40.log
-    interfaces:
-      - name: Ethernet 1/0/1
-        ip: 10.0.1.10
-        mask: 255.255.255.0
-      - name: Ethernet 1/0/2
-        ip: 10.0.2.10
-        mask: 255.255.255.0
+    config:
+      interfaces:
+        - name: Ethernet 1/0/1
+          ip: 10.0.1.10
+          mask: 255.255.255.0
+        - name: Ethernet 1/0/2
+          ip: 10.0.2.10
+          mask: 255.255.255.0
 
   - name: huawei-ar1000v
     host: 192.168.10.236
@@ -24,13 +25,14 @@ devices:
     ssh_config_file: /etc/ssh/ssh_config
     log_path: logs/
     session_log: netmiko_huawei-ar1000v.log
-    interfaces:
-      - name: GigabitEthernet0/0/1
-        ip: 10.0.1.20
-        mask: 255.255.255.0
-      - name: GigabitEthernet0/0/3
-        ip: 10.0.3.20
-        mask: 255.255.255.0
+    config:
+      interfaces:
+        - name: GigabitEthernet0/0/1
+          ip: 10.0.1.20
+          mask: 255.255.255.0
+        - name: GigabitEthernet0/0/3
+          ip: 10.0.3.20
+          mask: 255.255.255.0
 
   - name: routeros-chr720
     host: 192.168.10.237
@@ -40,10 +42,11 @@ devices:
     password: Password@123
     log_path: logs/
     session_log: netmiko_chr.log
-    interfaces:
-      - name: ether2
-        ip: 10.0.2.30
-        mask: 24
-      - name: ether3
-        ip: 10.0.3.30
-        mask: 24
+    config:
+      interfaces:
+        - name: ether2
+          ip: 10.0.2.30
+          mask: 24
+        - name: ether3
+          ip: 10.0.3.30
+          mask: 24
